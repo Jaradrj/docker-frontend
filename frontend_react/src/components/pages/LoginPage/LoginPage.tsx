@@ -14,7 +14,7 @@ import * as Yup from 'yup';
 import ActiveUserContext from '../../../Contexts/ActiveUserContext';
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string(),
+  email: Yup.string().email(),
   password: Yup.string(),
 });
 
@@ -121,7 +121,7 @@ const Login = () => {
         </Typography>
         <Typography>
           {' '}
-          Do you have an account ?<Link href='#'>Sign Up</Link>
+          Do you need a new account ?<Link href='/registration'>Sign Up</Link>
         </Typography>
       </Paper>
     </Grid>
