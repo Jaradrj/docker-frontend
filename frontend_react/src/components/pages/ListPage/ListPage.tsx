@@ -1,21 +1,22 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { List } from '../../../types/models/List.model';
-import { User } from '../../../types/models/User.model';
 import { Importance } from '../../../types/models/List.model';
 import ListService from '../../../Services/ListService';
 import ListForm from '../../molecules/ListForm/ListForm';
-import { useEffect, useState } from 'react';
+import {useContext, useEffect, useState} from 'react';
+import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 
 const ListPage = () => {
   const navigate = useNavigate();
   const { listEntryId } = useParams();
+  const { user } = useContext(ActiveUserContext);
   const [list, setList] = useState<List>({
     id: '',
     title: '',
     text: '',
     importance: Importance.LOW,
     createdAt: new Date(),
-    user: localStorage.getItem("user") as unknown as User
+    user: user!
   });
 
   useEffect(() => {

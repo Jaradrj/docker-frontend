@@ -9,6 +9,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import ActiveUserContext from "../../../Contexts/ActiveUserContext";
+import {useContext} from "react";
 
 interface ListProps {
   list: List;
@@ -17,7 +19,7 @@ interface ListProps {
 
 const UserForm = ({ list, submitActionHandler }: ListProps) => {
   const navigate = useNavigate();
-
+  const { user } = useContext(ActiveUserContext);
   const formik = useFormik({
     initialValues: {
       id: list ? list.id : '',
@@ -25,9 +27,7 @@ const UserForm = ({ list, submitActionHandler }: ListProps) => {
       text: list ? list.text : "",
       importance: list ? list.importance : Importance.LOW,
       createdAt: list ? list.createdAt : new Date(),
-      user: list
-        ? list.user
-        : (localStorage.getItem("user") as unknown as User),
+      user: list?.user ?? user!
     },
     validationSchema: object({
       title: string().required().min(2).max(50),
