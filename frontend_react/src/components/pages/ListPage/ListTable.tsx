@@ -4,12 +4,26 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
 import { List, Importance } from "../../../types/models/List.model";
+import { User } from "../../../types/models/User.model";
+import roles from "../../../config/Roles";
 import ListService from "../../../Services/ListService";
 import { useNavigate } from "react-router-dom";
+import Link from "@mui/material/Link";
 
 const ListTable = () => {
   const navigate = useNavigate();
   const [lists, setLists] = useState<List[]>([]);
+  const activeUser = JSON.parse(localStorage.getItem("user") as string);
+
+  const isAdmin = (user: User): boolean => {
+    let returnValue: boolean = false;
+    user.roles.map((role) => {
+      if (role.name == roles["ADMIN"]) {
+        returnValue = true;
+      }
+    });
+    return returnValue;
+  };
 
   useEffect(() => {
     ListService.getAllLists().then((data) => {
@@ -18,11 +32,11 @@ const ListTable = () => {
   }, []);
 
   const handleAdd = () => {
-    navigate("../list/edit/");
+    navigate("../list/edit/list");
   };
 
   const handleEdit = (id: string) => {
-    navigate("../list/edit/" + id);
+    navigate("../list/edit/list/" + id);
   };
 
   const handleDelete = (id: string) => {
@@ -32,6 +46,8 @@ const ListTable = () => {
 
   return (
     <>
+      <Link href="/user">To User Page</Link>{"  "}
+      {isAdmin(activeUser) ? <Link href="/admin">To Admin Page</Link> : <></>}
       {lists.map((list) => (
         <div key={list.id}>
           <Card sx={{ minWidth: 275 }}>
@@ -40,24 +56,25 @@ const ListTable = () => {
               Priority: {Importance[list.importance]} <br /> {list.title} <br />
               -------------------------------------- <br />
               {list.text}
-              <br /><br />
+              <br />
+              <br />
               <CardActions>
-              <Button
-                size="small"
-                color="primary"
-                variant="contained"
-                onClick={() => handleEdit(list.id)}
-              >
-                Edit
-              </Button>
-              <Button
-                size="small"
-                color="error"
-                variant="contained"
-                onClick={() => handleDelete(list.id)}
-              >
-                Delete
-              </Button>
+                <Button
+                  size="small"
+                  color="primary"
+                  variant="contained"
+                  onClick={() => handleEdit(list.id)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  size="small"
+                  color="error"
+                  variant="contained"
+                  onClick={() => handleDelete(list.id)}
+                >
+                  Delete
+                </Button>
               </CardActions>
             </CardContent>
           </Card>

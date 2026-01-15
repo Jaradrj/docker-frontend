@@ -2,6 +2,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
 import { useEffect, useState } from 'react';
 import { User } from '../../../types/models/User.model';
 import UserService from '../../../Services/UserService';
@@ -48,6 +49,7 @@ const UserTable = () => {
 
   return (
     <>
+      <Link href="/list">To the List</Link>
       {users.map((user) => (
         <div key={user.id}>
           <Card sx={{ minWidth: 275 }}>

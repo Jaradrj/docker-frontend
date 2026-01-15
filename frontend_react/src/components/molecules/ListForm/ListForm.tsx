@@ -13,14 +13,15 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 interface ListProps {
   list: List;
   submitActionHandler: (values: List) => void;
+  previousPage: string;
 }
 
-const UserForm = ({ list, submitActionHandler }: ListProps) => {
+const UserForm = ({ list, submitActionHandler, previousPage }: ListProps) => {
   const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
-      id: list ? list.id : '',
+      id: list ? list.id : "",
       title: list ? list.title : "",
       text: list ? list.text : "",
       importance: list ? list.importance : Importance.LOW,
@@ -112,7 +113,7 @@ const UserForm = ({ list, submitActionHandler }: ListProps) => {
             variant="contained"
             color="error"
             onClick={() => {
-              navigate("/list");
+              navigate("/" + previousPage);
             }}
           >
             Cancel

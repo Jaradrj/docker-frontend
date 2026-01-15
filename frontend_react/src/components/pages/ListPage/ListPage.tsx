@@ -1,21 +1,21 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { List } from '../../../types/models/List.model';
-import { User } from '../../../types/models/User.model';
-import { Importance } from '../../../types/models/List.model';
-import ListService from '../../../Services/ListService';
-import ListForm from '../../molecules/ListForm/ListForm';
-import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from "react-router-dom";
+import { List } from "../../../types/models/List.model";
+import { User } from "../../../types/models/User.model";
+import { Importance } from "../../../types/models/List.model";
+import ListService from "../../../Services/ListService";
+import ListForm from "../../molecules/ListForm/ListForm";
+import { useEffect, useState } from "react";
 
 const ListPage = () => {
   const navigate = useNavigate();
-  const { listEntryId } = useParams();
+  const { previousPage, listEntryId } = useParams();
   const [list, setList] = useState<List>({
-    id: '',
-    title: '',
-    text: '',
+    id: "",
+    title: "",
+    text: "",
     importance: Importance.LOW,
     createdAt: new Date(),
-    user: localStorage.getItem("user") as unknown as User
+    user: localStorage.getItem("user") as unknown as User,
   });
 
   useEffect(() => {
@@ -29,17 +29,23 @@ const ListPage = () => {
   }, [listEntryId]);
 
   const submitActionHandler = (values: List) => {
-    if (listEntryId !== undefined && listEntryId !== '') {
+    if (listEntryId !== undefined && listEntryId !== "") {
       ListService.updateList(values).then(() => {
-        navigate('../list');
+        navigate(("../" + previousPage) as string);
       });
     } else {
       ListService.addList(values).then(() => {
-        navigate('/list');
+        navigate(("/" + previousPage) as string);
       });
     }
   };
 
-  return <ListForm list={list} submitActionHandler={submitActionHandler} />;
+  return (
+    <ListForm
+      list={list}
+      submitActionHandler={submitActionHandler}
+      previousPage={previousPage as string}
+    />
+  );
 };
 export default ListPage;

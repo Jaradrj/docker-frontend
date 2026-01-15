@@ -5,51 +5,49 @@ import {
   Button,
   Typography,
   Link,
-} from '@mui/material';
-import React, {useContext, useEffect} from 'react';
+} from "@mui/material";
+import React, { useContext, useEffect } from "react";
 
-import { Form, Formik } from 'formik';
-import { useNavigate } from 'react-router-dom';
-import * as Yup from 'yup';
-import ActiveUserContext from '../../../Contexts/ActiveUserContext';
+import { Form, Formik } from "formik";
+import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required("**Required**"),
-    password: Yup.string()
-      .required("**Required**")
-      .max(12),
+  password: Yup.string().required("**Required**").max(12),
 });
 
 const Login = () => {
   const paperStyle = {
     padding: 20,
-    height: '70vh',
+    height: "70vh",
     width: 280,
-    margin: '20px auto',
+    margin: "20px auto",
   };
-  const btnstyle = { margin: '8px 0' };
+  const btnstyle = { margin: "8px 0" };
   const navigate = useNavigate();
   const { login, logout } = useContext(ActiveUserContext);
 
   useEffect(() => {
-   logout()
+    logout();
   }, []);
 
   const handleSubmit = (values: { email: string; password: string }) => {
     login(values.email.toLowerCase(), values.password)
       .then(() => {
         console.log(values);
-        navigate('/user');
+        navigate("/user");
       })
       .catch((error) => {
         if (
-          (typeof error.response !== 'undefined' &&
+          (typeof error.response !== "undefined" &&
             error.response.status === 401) ||
           error.response.status === 403
         ) {
-          alert('invalid login');
+          alert("invalid login");
         } else {
-          alert('login Error');
+          alert("login Error");
         }
       });
   };
@@ -65,8 +63,8 @@ const Login = () => {
 
         <Formik
           initialValues={{
-            email: '',
-            password: '',
+            email: "",
+            password: "",
           }}
           enableReinitialize
           validationSchema={validationSchema}
@@ -77,9 +75,9 @@ const Login = () => {
           {(props) => (
             <Form onSubmit={props.handleSubmit}>
               <TextField
-                label='email'
-                id='email'
-                placeholder='Enter username'
+                label="email"
+                id="email"
+                placeholder="Enter username"
                 fullWidth
                 required
                 autoFocus
@@ -88,14 +86,14 @@ const Login = () => {
                 value={props.values.email}
               />
               {props.errors.email && (
-                <div id='feedback'>{props.errors.email}</div>
+                <div id="feedback">{props.errors.email}</div>
               )}
 
               <TextField
-                id='password'
-                label='password'
-                placeholder='Enter password'
-                type='password'
+                id="password"
+                label="password"
+                placeholder="Enter password"
+                type="password"
                 fullWidth
                 required
                 onChange={props.handleChange}
@@ -103,13 +101,13 @@ const Login = () => {
                 value={props.values.password}
               />
               {props.errors.password && (
-                <div id='feedback'>{props.errors.password}</div>
+                <div id="feedback">{props.errors.password}</div>
               )}
 
               <Button
-                type='submit'
-                color='primary'
-                variant='contained'
+                type="submit"
+                color="primary"
+                variant="contained"
                 style={btnstyle}
                 fullWidth
               >
@@ -119,11 +117,11 @@ const Login = () => {
           )}
         </Formik>
         <Typography>
-          <Link href='#'>Forgot password ?</Link>
+          <Link href="#">Forgot password ?</Link>
         </Typography>
         <Typography>
-          {' '}
-          Do you need a new account ?<Link href='/registration'>Sign Up</Link>
+          {" "}
+          Do you need a new account ?<Link href="/registration">Sign Up</Link>
         </Typography>
       </Paper>
     </Grid>

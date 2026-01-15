@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { List, Importance } from "../../../types/models/List.model";
 import ListService from "../../../Services/ListService";
 import { useNavigate } from "react-router-dom";
+import Link from "@mui/material/Link";
+
 
 const AdminListTable = () => {
   const navigate = useNavigate();
@@ -18,11 +20,11 @@ const AdminListTable = () => {
   }, []);
 
   const handleAdd = () => {
-    navigate("../list/edit/");
+    navigate("../list/edit/admin");
   };
 
   const handleEdit = (id: string) => {
-    navigate("../list/edit/" + id);
+    navigate("../list/edit/admin/" + id);
   };
 
   const handleDelete = (id: string) => {
@@ -32,6 +34,7 @@ const AdminListTable = () => {
 
   return (
     <>
+          <Link href="/list">To the List</Link>
       {lists.map((list) => (
         <div key={list.id}>
           <Card sx={{ minWidth: 275 }}>
