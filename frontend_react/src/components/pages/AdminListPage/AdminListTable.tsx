@@ -41,10 +41,6 @@ const AdminListTable = () => {
       navigate("../list/edit/admin");
     };
 
-    const handleEdit = (id: string) => {
-      navigate("../list/edit/admin/" + id);
-    };
-
     const handleDelete = async (id: string) => {
       await ListService.deleteList(id);
       window.location.reload();
@@ -69,14 +65,6 @@ const AdminListTable = () => {
                 <br />
                 <br />
                 <CardActions>
-                  <Button
-                    size="small"
-                    color="primary"
-                    variant="contained"
-                    onClick={() => handleEdit(list.id)}
-                  >
-                    Edit
-                  </Button>
                   <Button
                     size="small"
                     color="error"
@@ -105,10 +93,6 @@ const AdminListTable = () => {
       navigate("../user/edit/admin");
     };
 
-    const handleEdit = (id: string) => {
-      navigate("../user/edit/admin/" + id);
-    };
-
     const handleDelete = async (id: string) => {
       await UserService.deleteUser(id);
       window.location.reload();
@@ -127,14 +111,6 @@ const AdminListTable = () => {
               <CardContent>
                 {user.firstName} {user.lastName} {user.email}
                 <CardActions>
-                  <Button
-                    size="small"
-                    color="primary"
-                    variant="contained"
-                    onClick={() => handleEdit(user.id)}
-                  >
-                    Edit
-                  </Button>
                   <Button
                     size="small"
                     color="error"
