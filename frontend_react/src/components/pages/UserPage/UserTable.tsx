@@ -16,11 +16,11 @@ const UserTable = () => {
   const user = useContext(ActiveUserContext).user as User;
 
   const handleAdd = () => {
-    navigate('../user/edit/');
+    navigate('../user/edit/user');
   };
 
   const handleEdit = (id: string) => {
-    navigate('../user/edit/' + id);
+    navigate('../user/edit/user/' + id);
   };
 
   const handleDelete = async (id: string) => {

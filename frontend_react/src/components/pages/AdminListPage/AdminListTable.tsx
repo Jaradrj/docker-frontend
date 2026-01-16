@@ -52,16 +52,11 @@ const AdminListTable = () => {
     };
     return (
       <>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={showList}
-              onChange={(e) => handleShowListChange(!showList)}
-            />
-          }
-          label="Show List Entries"
+        <Switch
+          checked={showList}
+          onChange={(e) => handleShowListChange(!showList)}
         />
-
+        show List Entries{" "}
         <Link href="/list">To the List</Link>
         {lists.map((list) => (
           <div key={list.id}>
@@ -108,11 +103,11 @@ const AdminListTable = () => {
     );
   } else {
     const handleAdd = () => {
-      navigate("../user/edit/");
+      navigate("../user/edit/admin");
     };
 
     const handleEdit = (id: string) => {
-      navigate("../user/edit/" + id);
+      navigate("../user/edit/admin/" + id);
     };
 
     const handleDelete = async (id: string) => {
@@ -121,18 +116,13 @@ const AdminListTable = () => {
     };
     return (
       <>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={showList}
-              onChange={(e) => handleShowListChange(!showList)}
-            />
-          }
-          label="Show Users"
+        <Switch
+          checked={showList}
+          onChange={(e) => handleShowListChange(!showList)}
         />
+        show Users{" "}
         <Link href="/list">To the List</Link>
-        {users.map((user: User) => {
-          {console.log("User", user.firstName)}
+        {users.map((user) => (
           <div key={user.id}>
             <Card sx={{ minWidth: 275 }}>
               <CardContent>
@@ -158,7 +148,8 @@ const AdminListTable = () => {
               </CardContent>
             </Card>
           </div>
-        })}
+        ))}
+        <br />
         <Button
           size="small"
           color="success"
