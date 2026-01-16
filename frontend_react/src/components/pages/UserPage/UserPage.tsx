@@ -25,14 +25,16 @@ const UserPage = () => {
     };
   }, [userId]);
 
-  const submitActionHandler = (values: User) => {
+  const submitActionHandler = async (values: User) => {
     if (userId !== undefined) {
-      UserService.updateUser(values).then(() => {
-                navigate(("../" + previousPage) as string);
+      await UserService.updateUser(values).then(() => {
+        navigate(("../" + previousPage) as string);
+        alert("Your user profile got updated!");
       });
     } else {
-      UserService.addUser(values).then(() => {
-                navigate(("/" + previousPage) as string);
+      await UserService.addUser(values).then(() => {
+        navigate(("/" + previousPage) as string);
+        alert("You added a new user!");
       });
     }
   };

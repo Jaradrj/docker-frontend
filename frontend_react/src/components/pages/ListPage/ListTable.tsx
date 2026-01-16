@@ -6,10 +6,12 @@ import { List, Importance } from "../../../types/models/List.model";
 import { User } from "../../../types/models/User.model";
 import roles from "../../../config/Roles";
 import ListService from "../../../Services/ListService";
-import Link from '@mui/material/Link';
+import Link from "@mui/material/Link";
 import { useNavigate } from "react-router-dom";
-import {useContext, useEffect, useState} from "react";
-import ActiveUserContext, {ActiveUserContextType} from "../../../Contexts/ActiveUserContext";
+import { useContext, useEffect, useState } from "react";
+import ActiveUserContext, {
+  ActiveUserContextType,
+} from "../../../Contexts/ActiveUserContext";
 const ListTable = () => {
   const navigate = useNavigate();
   const [lists, setLists] = useState<List[]>([]);
@@ -33,9 +35,10 @@ const ListTable = () => {
     navigate("../list/edit/list/" + id);
   };
 
-  const handleDelete = (id: string) => {
-    ListService.deleteList(id);
+  const handleDelete = async (id: string) => {
+    await ListService.deleteList(id);
     window.location.reload();
+    alert("You deleted you list entry!");
   };
 
   return (
@@ -66,7 +69,7 @@ const ListTable = () => {
                   size="small"
                   color="error"
                   variant="contained"
-                  onClick={() => handleDelete(list.id)}
+                  onClick={async () => await handleDelete(list.id)}
                 >
                   Delete
                 </Button>

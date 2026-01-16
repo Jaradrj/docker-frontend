@@ -45,9 +45,10 @@ const AdminListTable = () => {
       navigate("../list/edit/admin/" + id);
     };
 
-    const handleDelete = (id: string) => {
-      ListService.deleteList(id);
+    const handleDelete = async (id: string) => {
+      await ListService.deleteList(id);
       window.location.reload();
+      alert("You deleted the list entry!");
     };
     return (
       <>
@@ -80,7 +81,7 @@ const AdminListTable = () => {
                     size="small"
                     color="error"
                     variant="contained"
-                    onClick={() => handleDelete(list.id)}
+                    onClick={async () => await handleDelete(list.id)}
                   >
                     Delete
                   </Button>
@@ -111,6 +112,7 @@ const AdminListTable = () => {
     const handleDelete = async (id: string) => {
       await UserService.deleteUser(id);
       window.location.reload();
+      alert("You deleted a user profile!");
     };
     return (
       <>
