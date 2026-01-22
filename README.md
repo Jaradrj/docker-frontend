@@ -98,12 +98,12 @@ We use **Lighthouse** for non-functional testing.
 
 | Path | Description |
 | :--- | :--- |
-| `localhost:3000` | **Homepage** |
-| `/login` | Login page |
-| `/user` | User dashboard/profile page |
-| `/list` | Entries list overview |
-| `/user/edit/user` | Edit personal profile |
-| `/list/edit/list` | Edit personal lists |
-| `/admin` | Admin dashboard |
+| `localhost:3000` | **Homepage** (open for all) |
+| `/login` | Login page (open for all) |
+| `/user` | User dashboard/profile page (with Login Only) |
+| `/list` | Entries list overview (with Login Only) |
+| `/user/edit/user` | Edit personal profile (with Login Only) |
+| `/list/edit/list` | Edit personal lists (with Login Only) |
+| `/admin` | Admin dashboard (Admin only) |
 | `/user/edit/admin` | User management (Admin only) |
 | `/list/edit/admin` | List management (Admin only) |
