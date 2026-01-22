@@ -1,21 +1,14 @@
 import Button from "@mui/material/Button";
 import { List, SortByListCategories } from "../../../types/models/List.model";
 import ListService from "../../../Services/ListService";
-import Link from "@mui/material/Link";
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import ActiveUserContext, {
-  ActiveUserContextType,
-} from "../../../Contexts/ActiveUserContext";
+import { useEffect, useState } from "react";
 import ListEntry from "../../molecules/ListEntry";
 import ListDropdowns from "../../molecules/ListDropdowns/ListDropdowns";
-import { User } from "../../../types/models/User.model";
-import UserService from "../../../Services/UserService";
 
 const ListTable = () => {
   const navigate = useNavigate();
   const [lists, setLists] = useState<List[]>([]);
-  const activeUser = useContext(ActiveUserContext);
 
   const [filterValue, setFilterValue] = useState<string>();
   const [sortValue, setSortValue] = useState<SortByListCategories>();
@@ -62,7 +55,7 @@ const ListTable = () => {
       userFilterValue || undefined,
       isAscending,
     );
-  }, [filterValue, sortValue, userFilterValue, isAscending]);
+  }, [filterValue, sortValue, userFilterValue, isAscending, page]);
 
   const handleAdd = () => {
     navigate("../list/edit/list");
@@ -80,17 +73,6 @@ const ListTable = () => {
 
   return (
     <>
-      <ListDropdowns
-        filterValue={filterValue}
-        sortValue={sortValue}
-        onFilterChange={setFilterValue}
-        onSortChange={setSortValue}
-        userFilterValue={userFilterValue}
-        onUserFilterChange={setUserFilterValue}
-        isAdmin={false}
-        isAscending={isAscending}
-        onIsAscendingChange={() => setIsAscending(!isAscending)}
-      />
       <Button
         id="linkToHome"
         variant="contained"
@@ -103,6 +85,17 @@ const ListTable = () => {
       >
         Homepage
       </Button>
+        <ListDropdowns
+            filterValue={filterValue}
+            sortValue={sortValue}
+            onFilterChange={setFilterValue}
+            onSortChange={setSortValue}
+            userFilterValue={userFilterValue}
+            onUserFilterChange={setUserFilterValue}
+            isAdmin={false}
+            isAscending={isAscending}
+            onIsAscendingChange={() => setIsAscending(!isAscending)}
+        />
       {"  "}
       {lists.map((list) => (
         <div key={list.id}>
