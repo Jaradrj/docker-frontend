@@ -1,26 +1,23 @@
- # Will create a node environment in the container
-FROM node:16-alpine AS builder
- # Will create a directory app and switch to that directory
+# Build
+FROM node:20-alpine AS builder
 WORKDIR /app
+COPY package.json yarn.lock tsconfig.json ./
+
 # Copies package.json file and soruce code to /app directory
-COPY package.json .
+COPY package.json yarn.lock tsconfig.json vite.config.ts ./
 COPY .env.production .
 COPY ./public ./public
 COPY ./src ./src
+COPY index.html ./
 
-# Runs npm install to create node_modules for your app
-RUN yarn install --production
-# builds the production version of the app
+# dependencies install and build
+RUN yarn install
 RUN yarn build
 
-# Use a lightweight web server to serve the production build
+# Runtime
 FROM nginx:alpine
-
-# Copy the production build from the builder stage to the nginx web server
 COPY --from=builder /app/build /usr/share/nginx/html
-# Copy config files
-COPY .env.production .
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Expose port 80
 EXPOSE 80
 
