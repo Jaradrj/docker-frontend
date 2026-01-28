@@ -36,7 +36,7 @@ jobs:
           context: ./frontend_react
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/frontend:latest
-            ghcr.io/${{ github.repository_owner }}/frontend:${{ github.sha }}
+            ghcr.io/jaradrj/frontend:latest
+            ghcr.io/jaradrj/frontend:${{ github.sha }}
           build-args: |
             VITE_BASEURL=${{ secrets.VITE_BASEURL }}
