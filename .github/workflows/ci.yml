@@ -35,7 +35,7 @@ jobs:
             ghcr.io/jaradrj/frontend:latest
             ghcr.io/jaradrj/frontend:${{ github.sha }}
 
-    deploy:
+  deploy:
     needs: build-and-push-frontend
     runs-on: ubuntu-latest
 
