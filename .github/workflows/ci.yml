@@ -12,10 +12,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-
-    env:
-      VITE_BASEURL: ${{ secrets.VITE_BASEURL }}
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -38,5 +34,20 @@ jobs:
           tags: |
             ghcr.io/jaradrj/frontend:latest
             ghcr.io/jaradrj/frontend:${{ github.sha }}
-          build-args: |
-            VITE_BASEURL=${{ secrets.VITE_BASEURL }}
+
+    deploy:
+    needs: build-and-push-frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy Frontend to Server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: hosting.dev.noseryoung.ch
+          username: jara
+          password: ${{ secrets.DEPLOY_PASSWORD }}
+          port: 2222
+          script: |
+            cd /home/jara
+            docker compose pull frontend
+            docker compose up -d frontend
